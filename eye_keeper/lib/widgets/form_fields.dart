@@ -6,7 +6,7 @@ class MyTextField extends StatelessWidget {
     required this.text,
     required this.icon,
     required this.obscureText,
-    required this.textController,
+    this.textController,
     this.validator,
   }) : super(key: key);
 
