@@ -30,7 +30,9 @@ class NavigationDrawer extends StatelessWidget {
         ListTile(
           leading: const Icon(Icons.home),
           title: const Text('Home'),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushReplacementNamed(context, '/');
+          },
         ),
         ExpansionTile(
           leading: const Icon(Icons.home),
