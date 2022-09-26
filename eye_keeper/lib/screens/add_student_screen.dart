@@ -1,3 +1,4 @@
+import 'package:eye_keeper/utilities/input_validators.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -45,6 +46,9 @@ class _AddStudentState extends State<AddStudent> {
                   icon: null,
                   obscureText: false,
                   textController: null,
+                  validator: (value) {
+                    return idValidator(value);
+                  },
                 ),
                 SizedBox(height: 10),
                 MyTextField(
@@ -52,6 +56,9 @@ class _AddStudentState extends State<AddStudent> {
                   icon: null,
                   obscureText: false,
                   textController: null,
+                  validator: (value) {
+                    return isNotEmptyValidator(value);
+                  },
                 ),
                 SizedBox(height: 10),
                 MyTextField(
@@ -59,6 +66,9 @@ class _AddStudentState extends State<AddStudent> {
                   icon: null,
                   obscureText: false,
                   textController: null,
+                  validator: (value) {
+                    return mobileValidator(value);
+                  },
                 ),
                 SizedBox(height: 10),
                 MyTextField(
@@ -66,12 +76,15 @@ class _AddStudentState extends State<AddStudent> {
                   icon: null,
                   obscureText: false,
                   textController: null,
+                  validator: ((value) {
+                    return emailValidator(value);
+                  }),
                 ),
                 SizedBox(height: 10),
                 DropdownButtonHideUnderline(
                   child: DropdownButtonFormField2(
                     validator: (value) {
-                      return "Select Class";
+                      return isNotEmptyValidator(value);
                     },
                     hint: Text(
                       'Select Class',
@@ -107,6 +120,9 @@ class _AddStudentState extends State<AddStudent> {
                   icon: null,
                   obscureText: false,
                   textController: null,
+                  validator: (value) {
+                    return isNotEmptyValidator(value);
+                  },
                 ),
                 SizedBox(height: 20),
                 Align(

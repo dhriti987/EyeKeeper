@@ -1,3 +1,4 @@
+import 'package:eye_keeper/utilities/input_validators.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/form_fields.dart';
@@ -37,11 +38,13 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 margin: EdgeInsets.only(top: 50),
                 child: MyTextField(
-                  text: "Email",
-                  obscureText: false,
-                  icon: Icons.mail_outline_rounded,
-                  textController: null,
-                ),
+                    text: "Email",
+                    obscureText: false,
+                    icon: Icons.mail_outline_rounded,
+                    textController: null,
+                    validator: (value) {
+                      return emailValidator(value);
+                    }),
               ),
               Container(
                 margin: EdgeInsets.only(top: 20, bottom: 30),
@@ -50,6 +53,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: true,
                   icon: Icons.lock_outline_rounded,
                   textController: null,
+                  validator: ((value) {
+                    return passwordValidator(value);
+                  }),
                 ),
               ),
               Align(
