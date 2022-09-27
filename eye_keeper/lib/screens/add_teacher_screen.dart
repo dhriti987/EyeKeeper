@@ -1,3 +1,4 @@
+import 'package:eye_keeper/utilities/input_validators.dart';
 import 'package:eye_keeper/widgets/form_fields.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,8 @@ class AddTeacher extends StatefulWidget {
 }
 
 class _AddTeacherState extends State<AddTeacher> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,6 +23,7 @@ class _AddTeacherState extends State<AddTeacher> {
       ),
       body: Center(
         child: Form(
+          key: _formKey,
           child: SizedBox(
             width: 500,
             child: ListView(
@@ -30,6 +34,9 @@ class _AddTeacherState extends State<AddTeacher> {
                   icon: null,
                   obscureText: false,
                   textController: null,
+                  validator: (value) {
+                    return idValidator(value);
+                  },
                 ),
                 SizedBox(height: 10),
                 MyTextField(
@@ -37,6 +44,9 @@ class _AddTeacherState extends State<AddTeacher> {
                   icon: null,
                   obscureText: false,
                   textController: null,
+                  validator: (value) {
+                    return isNotEmptyValidator(value);
+                  },
                 ),
                 SizedBox(height: 10),
                 MyTextField(
@@ -44,6 +54,9 @@ class _AddTeacherState extends State<AddTeacher> {
                   icon: null,
                   obscureText: false,
                   textController: null,
+                  validator: (value) {
+                    return emailValidator(value);
+                  },
                 ),
                 SizedBox(height: 10),
                 MyTextField(
@@ -51,14 +64,19 @@ class _AddTeacherState extends State<AddTeacher> {
                   icon: null,
                   obscureText: false,
                   textController: null,
+                  validator: (value) {
+                    return mobileValidator(value);
+                  },
                 ),
                 SizedBox(height: 10),
                 MyTextField(
-                  text: 'Designation',
-                  icon: null,
-                  obscureText: false,
-                  textController: null,
-                ),
+                    text: 'Designation',
+                    icon: null,
+                    obscureText: false,
+                    textController: null,
+                    validator: (value) {
+                      return isNotEmptyValidator(value);
+                    }),
                 SizedBox(height: 20),
                 Align(
                   alignment: Alignment.center,
@@ -68,7 +86,9 @@ class _AddTeacherState extends State<AddTeacher> {
                           horizontal: 30, vertical: 18),
                       shape: const StadiumBorder(),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      _formKey.currentState?.validate();
+                    },
                     child: Text('Submit'),
                   ),
                 ),
