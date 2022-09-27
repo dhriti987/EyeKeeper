@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class NavigationDrawer extends StatelessWidget {
@@ -31,7 +33,7 @@ class NavigationDrawer extends StatelessWidget {
           leading: const Icon(Icons.home),
           title: const Text('Home'),
           onTap: () {
-            Navigator.pushReplacementNamed(context, '/');
+            Navigator.pushReplacementNamed(context, '/home');
           },
         ),
         ExpansionTile(
@@ -54,10 +56,25 @@ class NavigationDrawer extends StatelessWidget {
             ),
           ],
         ),
-        ListTile(
+        ExpansionTile(
           leading: const Icon(Icons.home),
-          title: const Text('Home'),
-          onTap: () {},
+          title: const Text('Display Data'),
+          children: [
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text('Show All Teacher'),
+              onTap: () {
+                Navigator.pushNamed(context, '/display-teacher');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text('Show All Student'),
+              onTap: () {
+                Navigator.pushNamed(context, '/display-student');
+              },
+            ),
+          ],
         ),
         ListTile(
           leading: const Icon(Icons.home),
@@ -66,8 +83,10 @@ class NavigationDrawer extends StatelessWidget {
         ),
         ListTile(
           leading: const Icon(Icons.home),
-          title: const Text('Home'),
-          onTap: () {},
+          title: const Text('Exit'),
+          onTap: () {
+            exit(0);
+          },
         ),
       ],
     );
