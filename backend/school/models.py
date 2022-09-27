@@ -1,29 +1,28 @@
 from django.db import models
 
+from authentication.models import User
+
 # Create your models here.
 
 def create_path_images(self,filename):
-    email = self.email.split('@')[0]
+    email = self.parent_email.split('@')[0]
     return f'image/{email}/{filename}'
 
 class Teacher(models.Model):
-    id = models.IntegerField(primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
-    email = models.EmailField(unique=True)
     contact_no = models.CharField(max_length=10,unique=True)
 
     def __str__(self):
         return self.name
 
 class Section(models.Model):
-    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
     
 class Class(models.Model):
-    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=50)
     section = models.ForeignKey(to=Section,on_delete=models.CASCADE,related_name='section')
 
