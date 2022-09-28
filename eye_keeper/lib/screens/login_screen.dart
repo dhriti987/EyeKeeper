@@ -1,5 +1,8 @@
+import 'package:dio/dio.dart';
+import 'package:eye_keeper/providers/api.dart';
 import 'package:eye_keeper/utilities/input_validators.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/form_fields.dart';
 
@@ -11,6 +14,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,23 +42,23 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 50),
+                margin: const EdgeInsets.only(top: 50),
                 child: MyTextField(
                     text: "Email",
                     obscureText: false,
                     icon: Icons.mail_outline_rounded,
-                    textController: null,
+                    textController: _email,
                     validator: (value) {
                       return emailValidator(value);
                     }),
               ),
               Container(
-                margin: EdgeInsets.only(top: 20, bottom: 30),
+                margin: const EdgeInsets.only(top: 20, bottom: 30),
                 child: MyTextField(
                   text: "PASSWORD",
                   obscureText: true,
                   icon: Icons.lock_outline_rounded,
-                  textController: null,
+                  textController: _password,
                   validator: ((value) {
                     return passwordValidator(value);
                   }),
@@ -66,8 +72,22 @@ class _LoginScreenState extends State<LoginScreen> {
                         horizontal: 30, vertical: 18),
                     shape: const StadiumBorder(),
                   ),
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/home');
+                  onPressed: () async {
+                    try {
+                      var response = await api.post('auth/token/', data: {
+                        "username": _email.value.text,
+                        "password": _password.value.text,
+                      });
+                      final pref = await SharedPreferences.getInstance();
+                      await pref.setString("token", response.data['token']);
+                      await pref.setString("name", response.data['name']);
+                      await pref.setInt("userId", response.data['user_id']);
+                      await pref.setInt("class", response.data['class']);
+                      if (!mounted) return;
+                      Navigator.pushReplacementNamed(context, '/home');
+                    } on DioError catch (e) {
+                      showError(context, e);
+                    }
                   },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -86,6 +106,22 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<dynamic> showError(BuildContext context, DioError e) {
+    return showDialog(
+      context: context,
+      builder: ((context) => AlertDialog(
+            title: const Text("Login Failed"),
+            content: Text(e.response?.data['non_field_errors'][0]),
+            actions: [
+              TextButton(
+                onPressed: (() => Navigator.pop(context)),
+                child: const Text("Ok"),
+              )
+            ],
+          )),
     );
   }
 }

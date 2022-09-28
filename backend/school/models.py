@@ -15,7 +15,7 @@ class Section(models.Model):
 class Class(models.Model):
     name = models.CharField(max_length=50)
     section = models.ForeignKey(
-        to=Section, on_delete=models.CASCADE, related_name='section')
+        to=Section, on_delete=models.CASCADE, related_name='_class')
 
     def __str__(self):
         return self.name + " " + self.section.name
@@ -28,7 +28,8 @@ def create_path_images(self, filename):
 
 class Teacher(models.Model):
     id = models.CharField(primary_key=True, max_length=20)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="teacher")
     name = models.CharField(max_length=50)
     contact = models.CharField(max_length=10, unique=True)
     _class = models.ForeignKey(
