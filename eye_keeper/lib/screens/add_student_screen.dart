@@ -16,13 +16,6 @@ class AddStudent extends StatefulWidget {
 }
 
 class _AddStudentState extends State<AddStudent> {
-  final List<String> classes = [
-    'Item1',
-    'Item2',
-    'Item3',
-    'Item4',
-  ];
-
   Future<List<Class>> fetchData() async {
     var pref = await SharedPreferences.getInstance();
     var response = await api.get('school/class/',
@@ -64,7 +57,7 @@ class _AddStudentState extends State<AddStudent> {
                     return idValidator(value);
                   },
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 MyTextField(
                   text: 'Full Name',
                   icon: null,
@@ -74,7 +67,7 @@ class _AddStudentState extends State<AddStudent> {
                     return isNotEmptyValidator(value);
                   },
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 MyTextField(
                   text: 'Contact',
                   icon: null,
@@ -84,7 +77,7 @@ class _AddStudentState extends State<AddStudent> {
                     return mobileValidator(value);
                   },
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 MyTextField(
                   text: 'Email',
                   icon: null,
@@ -94,7 +87,7 @@ class _AddStudentState extends State<AddStudent> {
                     return emailValidator(value);
                   }),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 FutureBuilder<List<Class>>(
                     future: fetchData(),
                     builder: (context, snapshot) {
@@ -145,7 +138,7 @@ class _AddStudentState extends State<AddStudent> {
                     return isNotEmptyValidator(value);
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Align(
                   alignment: Alignment.center,
                   child: ElevatedButton(
@@ -155,7 +148,10 @@ class _AddStudentState extends State<AddStudent> {
                       shape: const StadiumBorder(),
                     ),
                     onPressed: () {
-                      if (_formKey.currentState?.validate() ?? false) {}
+                      if (_formKey.currentState?.validate() ?? false) {
+                        if (imagePath == null) {
+                        } else {}
+                      }
                     },
                     child: const Text('Submit'),
                   ),
