@@ -14,7 +14,7 @@ String? idValidator(String? value) {
 
 String? passwordValidator(String? value) {
   String? isNotEmpty = isNotEmptyValidator(value);
-  if (isNotEmpty == null && value!.length >= 6) {
+  if (isNotEmpty == null && value!.length >= 4) {
     return null;
   } else if (isNotEmpty != null) {
     return isNotEmpty;

@@ -14,95 +14,101 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SizedBox(
-          width: 500,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
-                'Login',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 15),
-                child: Text(
-                  'Please sign in to continue',
-                  style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15),
+      body: Form(
+        key: _formKey,
+        child: Center(
+          child: SizedBox(
+            width: 500,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text(
+                  'Login',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
                 ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 50),
-                child: MyTextField(
-                    text: "Email",
-                    obscureText: false,
-                    icon: Icons.mail_outline_rounded,
-                    textController: _email,
-                    validator: (value) {
-                      return emailValidator(value);
+                const Padding(
+                  padding: EdgeInsets.only(top: 15),
+                  child: Text(
+                    'Please sign in to continue',
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 50),
+                  child: MyTextField(
+                      text: "Email",
+                      obscureText: false,
+                      icon: Icons.mail_outline_rounded,
+                      textController: _email,
+                      validator: (value) {
+                        return emailValidator(value);
+                      }),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 20, bottom: 30),
+                  child: MyTextField(
+                    text: "PASSWORD",
+                    obscureText: true,
+                    icon: Icons.lock_outline_rounded,
+                    textController: _password,
+                    validator: ((value) {
+                      return passwordValidator(value);
                     }),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 20, bottom: 30),
-                child: MyTextField(
-                  text: "PASSWORD",
-                  obscureText: true,
-                  icon: Icons.lock_outline_rounded,
-                  textController: _password,
-                  validator: ((value) {
-                    return passwordValidator(value);
-                  }),
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 18),
-                    shape: const StadiumBorder(),
-                  ),
-                  onPressed: () async {
-                    try {
-                      var response = await api.post('auth/token/', data: {
-                        "username": _email.value.text,
-                        "password": _password.value.text,
-                      });
-                      final pref = await SharedPreferences.getInstance();
-                      await pref.setString("token", response.data['token']);
-                      await pref.setString("name", response.data['name']);
-                      await pref.setInt("userId", response.data['user_id']);
-                      await pref.setInt("class", response.data['class']);
-                      if (!mounted) return;
-                      Navigator.pushReplacementNamed(context, '/home');
-                    } on DioError catch (e) {
-                      showError(context, e);
-                    }
-                  },
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      Text(
-                        'LOGIN ',
-                      ),
-                      Icon(
-                        Icons.arrow_forward_rounded,
-                      )
-                    ],
                   ),
                 ),
-              ),
-            ],
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 18),
+                      shape: const StadiumBorder(),
+                    ),
+                    onPressed: () async {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        try {
+                          var response = await api.post('auth/token/', data: {
+                            "username": _email.value.text,
+                            "password": _password.value.text,
+                          });
+                          final pref = await SharedPreferences.getInstance();
+                          await pref.setString("token", response.data['token']);
+                          await pref.setString("name", response.data['name']);
+                          await pref.setInt("userId", response.data['user_id']);
+                          await pref.setInt("class", response.data['class']);
+                          if (!mounted) return;
+                          Navigator.pushReplacementNamed(context, '/home');
+                        } on DioError catch (e) {
+                          showError(context, e);
+                        }
+                      }
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        Text(
+                          'LOGIN ',
+                        ),
+                        Icon(
+                          Icons.arrow_forward_rounded,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
