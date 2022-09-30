@@ -30,6 +30,12 @@ class _AddStudentState extends State<AddStudent> {
 
   final _formKey = GlobalKey<FormState>();
 
+  final TextEditingController _id = TextEditingController();
+  final TextEditingController _fullname = TextEditingController();
+  final TextEditingController _contact = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _address = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +58,7 @@ class _AddStudentState extends State<AddStudent> {
                   text: 'ID',
                   icon: null,
                   obscureText: false,
-                  textController: null,
+                  textController: _id,
                   validator: (value) {
                     return idValidator(value);
                   },
@@ -62,7 +68,7 @@ class _AddStudentState extends State<AddStudent> {
                   text: 'Full Name',
                   icon: null,
                   obscureText: false,
-                  textController: null,
+                  textController: _fullname,
                   validator: (value) {
                     return isNotEmptyValidator(value);
                   },
@@ -72,7 +78,7 @@ class _AddStudentState extends State<AddStudent> {
                   text: 'Contact',
                   icon: null,
                   obscureText: false,
-                  textController: null,
+                  textController: _contact,
                   validator: (value) {
                     return mobileValidator(value);
                   },
@@ -82,7 +88,7 @@ class _AddStudentState extends State<AddStudent> {
                   text: 'Email',
                   icon: null,
                   obscureText: false,
-                  textController: null,
+                  textController: _email,
                   validator: ((value) {
                     return emailValidator(value);
                   }),
@@ -133,7 +139,7 @@ class _AddStudentState extends State<AddStudent> {
                   text: 'Address',
                   icon: null,
                   obscureText: false,
-                  textController: null,
+                  textController: _address,
                   validator: (value) {
                     return isNotEmptyValidator(value);
                   },
