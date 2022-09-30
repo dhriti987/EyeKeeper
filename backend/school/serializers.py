@@ -15,7 +15,13 @@ class ClassSerializer(serializers.ModelSerializer):
         return obj.name + " " + obj.section.name
 
 
-class StudentSerialiezer(serializers.ModelSerializer):
+class StudentSerializer(serializers.ModelSerializer):
+    _class = ClassSerializer()
+
     class Meta:
         model = Student
         fields = "__all__"
+
+    def create(self, validated_data):
+        print(validated_data)
+        return Student.objects.create(**validated_data)
