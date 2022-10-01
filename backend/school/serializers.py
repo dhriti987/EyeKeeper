@@ -16,12 +16,12 @@ class ClassSerializer(serializers.ModelSerializer):
 
 
 class StudentSerializer(serializers.ModelSerializer):
-    _class = ClassSerializer()
+
+    student_class = serializers.SerializerMethodField()
 
     class Meta:
         model = Student
         fields = "__all__"
 
-    def create(self, validated_data):
-        print(validated_data)
-        return Student.objects.create(**validated_data)
+    def get_student_class(self, obj):
+        return ClassSerializer(obj._class).data
