@@ -59,7 +59,7 @@ class _AddTeacherState extends State<AddTeacher> {
                     return idValidator(value);
                   },
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 MyTextField(
                   text: 'Full Name',
                   icon: null,
@@ -69,7 +69,7 @@ class _AddTeacherState extends State<AddTeacher> {
                     return isNotEmptyValidator(value);
                   },
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 MyTextField(
                   text: 'Email',
                   icon: null,
@@ -79,7 +79,7 @@ class _AddTeacherState extends State<AddTeacher> {
                     return emailValidator(value);
                   },
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 FutureBuilder<List<Class>>(
                     future: fetchData(),
                     builder: (context, snapshot) {
@@ -130,7 +130,7 @@ class _AddTeacherState extends State<AddTeacher> {
                     return mobileValidator(value);
                   },
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 MyTextField(
                     text: 'Designation',
                     icon: null,
@@ -139,7 +139,7 @@ class _AddTeacherState extends State<AddTeacher> {
                     validator: (value) {
                       return isNotEmptyValidator(value);
                     }),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Align(
                   alignment: Alignment.center,
                   child: ElevatedButton(
@@ -151,7 +151,7 @@ class _AddTeacherState extends State<AddTeacher> {
                     onPressed: () {
                       _formKey.currentState?.validate();
                     },
-                    child: Text('Submit'),
+                    child: const Text('Submit'),
                   ),
                 ),
               ],
