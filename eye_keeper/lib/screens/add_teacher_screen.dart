@@ -25,7 +25,6 @@ class _AddTeacherState extends State<AddTeacher> {
   }
 
   String? selectedValue;
-  String? imagePath;
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _id = TextEditingController();

@@ -78,8 +78,10 @@ class NavigationDrawer extends StatelessWidget {
         ),
         ListTile(
           leading: const Icon(Icons.home),
-          title: const Text('Home'),
-          onTap: () {},
+          title: const Text('Attendance'),
+          onTap: () {
+            Navigator.pushNamed(context, '/display-attendance');
+          },
         ),
         ListTile(
           leading: const Icon(Icons.home),

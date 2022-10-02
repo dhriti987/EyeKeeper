@@ -1,9 +1,11 @@
 import 'package:eye_keeper/screens/add_student_screen.dart';
 import 'package:eye_keeper/screens/add_teacher_screen.dart';
+import 'package:eye_keeper/screens/display_attendance.dart';
 import 'package:eye_keeper/screens/display_student_screen.dart';
 import 'package:eye_keeper/screens/display_teacher_screen.dart';
 import 'package:eye_keeper/screens/home_screen.dart';
 import 'package:eye_keeper/screens/login_screen.dart';
+import 'package:eye_keeper/screens/student_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
@@ -29,6 +31,12 @@ class RouteGenerator {
 
       case '/display-teacher':
         return MaterialPageRoute(builder: (_) => const DisplayTeacher());
+
+      case '/display-attendance':
+        return MaterialPageRoute(builder: (_) => const DisplayAttendance());
+
+      case '/student-details':
+        return MaterialPageRoute(builder: (_) => const StudentDetails());
 
       default:
         // If there is no such named route in the switch statement
