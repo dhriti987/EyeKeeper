@@ -1,4 +1,5 @@
 from django.db import models
+from traitlets import default
 
 from authentication.models import User
 
@@ -48,6 +49,7 @@ class Student(models.Model):
     _class = models.ForeignKey(
         to=Class, on_delete=models.CASCADE, related_name='student_class')
     photo = models.ImageField(upload_to=create_path_images)
+    address = models.CharField(max_length=255, default="")
     admission_date = models.DateField(auto_now_add=True)
 
     def __str__(self):

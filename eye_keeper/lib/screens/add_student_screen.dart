@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:eye_keeper/models/class.dart';
 import 'package:eye_keeper/providers/api.dart';
 import 'package:eye_keeper/utilities/input_validators.dart';
+import 'package:eye_keeper/widgets/alert_dialogs.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -156,7 +157,11 @@ class _AddStudentState extends State<AddStudent> {
                     onPressed: () {
                       if (_formKey.currentState?.validate() ?? false) {
                         if (imagePath == null) {
-                        } else {}
+                          showAlertDialog(context, "Image Not Selected",
+                              "Please Select an Image for Student");
+                        } else {
+                          sendStudentData();
+                        }
                       }
                     },
                     child: const Text('Submit'),
@@ -194,5 +199,34 @@ class _AddStudentState extends State<AddStudent> {
             child: const Text("Select Image"))
       ],
     );
+  }
+
+  void sendStudentData() async {
+    var data = {
+      "id": _id.value.text,
+      "name": _fullname.value.text,
+      "email": _email.value.text,
+      "contact": _contact.value.text,
+      "_class": selectedValue,
+      "photo": await MultipartFile.fromFile(imagePath!),
+      "address": _address.value.text
+    };
+
+    var formData = FormData.fromMap(data);
+
+    final pref = await SharedPreferences.getInstance();
+    api.options.headers['Authorization'] = "Token ${pref.getString("token")}";
+
+    try {
+      await api.post("school/student/", data: formData);
+      if (!mounted) return;
+      showAlertDialog(
+          context,
+          "Successfully Added Student data of ${_fullname.value.text}",
+          "Succesfull");
+    } on DioError catch (e) {
+      if (!mounted) return;
+      showAlertDialog(context, e.response?.data.toString(), "Error");
+    }
   }
 }
