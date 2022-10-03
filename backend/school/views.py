@@ -1,4 +1,4 @@
-from flask import Response
+from rest_framework.response import Response
 from rest_framework import generics
 from school.models import Class, Student, Teacher
 
