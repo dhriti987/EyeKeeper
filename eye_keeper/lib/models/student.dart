@@ -25,7 +25,7 @@ class Student {
         name: json['name'],
         email: json['email'],
         contact: json['contact'],
-        className: Class.fromJson(json['_class']),
+        className: Class.fromJson(json['student_class']),
         image: json['photo'],
         admissionDate: json['admission_date']);
   }

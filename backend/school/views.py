@@ -1,7 +1,7 @@
 from rest_framework import generics
-from school.models import Class, Student
+from school.models import Class, Student, Teacher
 
-from school.serializers import ClassSerializer, StudentSerializer
+from school.serializers import ClassSerializer, StudentSerializer, TeacherSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
@@ -20,3 +20,9 @@ class StudentAPIView(generics.ListCreateAPIView):
 
     serializer_class = StudentSerializer
     queryset = Student.objects.all()
+
+
+class TeacherAPIView(generics.ListCreateAPIView):
+
+    serializer_class = TeacherSerializer
+    queryset = Teacher.objects.all()

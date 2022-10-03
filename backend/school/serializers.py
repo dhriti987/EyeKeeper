@@ -1,7 +1,6 @@
-from dataclasses import fields
 from rest_framework import serializers
 
-from school.models import Class, Student
+from school.models import Class, Student, Teacher
 
 
 class ClassSerializer(serializers.ModelSerializer):
@@ -24,4 +23,16 @@ class StudentSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def get_student_class(self, obj):
+        return ClassSerializer(obj._class).data
+
+
+class TeacherSerializer(serializers.ModelSerializer):
+
+    teacher_class = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Teacher
+        fields = "__all__"
+
+    def get_teacher_class(self, obj):
         return ClassSerializer(obj._class).data

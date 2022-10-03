@@ -23,7 +23,7 @@ class Teacher {
         user: json['user'],
         name: json['name'],
         contact: json['contact'],
-        className: Class.fromJson(json['_class']),
+        className: Class.fromJson(json['teacher_class']),
         designation: json['designation']);
   }
 
